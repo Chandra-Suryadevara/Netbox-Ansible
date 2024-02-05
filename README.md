@@ -21,31 +21,31 @@ This repository contains a collection of Ansible playbooks designed for automati
 
 ## Playbooks
 
-1. **Deleting IPs:**
+1. Deleting IPs:
    - Delete IP addresses in NetBox.
 
-2. **Updating Interfaces:**
+2. Updating Interfaces:
    - Update existing interfaces in NetBox.
 
-3. **Deleting Interfaces:**
+3. Deleting Interfaces:
    - Remove interfaces from devices in NetBox.
 
-4. **Assigning IP to Devices:**
+4. Assigning IP to Devices:
    - Assign IP addresses to devices in NetBox.
 
-5. **Adding Modules:**
+5. Adding Modules:
    - Add hardware modules to devices in NetBox.
 
-6. **Adding Locations:**
+6. Adding Locations:
    - Add physical locations to NetBox.
 
-7. **Adding IP Addresses:**
+7. Adding IP Addresses:
    - Add new IP addresses to NetBox.
 
-8. **Adding Interfaces:**
+8. Adding Interfaces:
    - Add new interfaces to devices in NetBox.
 
-9. **Adding Devices:**
+9. Adding Devices:
    - Add new devices to NetBox.
 
 ## Prerequisites
