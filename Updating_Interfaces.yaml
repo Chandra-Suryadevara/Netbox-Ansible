@@ -1,0 +1,33 @@
+- name: "Updating Interfaces for Data"
+  connection: local
+  hosts: localhost
+  gather_facts: False
+  module_defaults:
+    group/netbox.netbox.netbox:
+      netbox_url: "your url"
+      netbox_token: "your api token"
+
+  tasks:
+    - name: Read users from CSV file
+      community.general.read_csv:
+        path: 'your csv file path'
+      register: name_of_file
+      delegate_to: localhost
+
+
+    - name: Create interfaces for IP
+      netbox.netbox.netbox_device_interface:
+        data:
+          device: "{{ port.DEVICE_NAME}}"
+          name: "GigabitEthernet1/0/{{ port.PORT_NO }}"
+          label: "{{ port.ROOM}}"
+          description: "{{ port.DES }}"
+        state: present
+        query_params:
+          - device
+          - name
+      loop: "{{ name_of_file.list }}"
+      loop_control:
+        loop_var: port 
+
+

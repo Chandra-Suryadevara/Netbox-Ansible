@@ -1,0 +1,28 @@
+- name: "Adding Interfaces for IP"
+  connection: local
+  hosts: localhost
+  gather_facts: False
+  module_defaults:
+    group/netbox.netbox.netbox:
+      netbox_url: "your url"
+      netbox_token: "your api token"
+
+  tasks:
+    - name: Read users from CSV file
+      community.general.read_csv:
+        path: 'your csv file path'
+      register: name_of_file
+      delegate_to: localhost
+
+    - name: Create interfaces for IP
+      netbox.netbox.netbox_device_interface:
+        data:
+          device: "{{ device.HOST_NAME}}"
+          name: name_of_interface
+          type: type_of_interface
+        state: present
+      loop: "{{ name_of_file.list }}"
+      loop_control:
+        loop_var: device 
+
+

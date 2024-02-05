@@ -1,0 +1,29 @@
+- name: "Adding Devices"
+  connection: local
+  hosts: localhost
+  gather_facts: False
+  module_defaults:
+    group/netbox.netbox.netbox:
+      netbox_url: "your url"
+      netbox_token: "your api token"
+  tasks:
+    - name: Read users from CSV file
+      community.general.read_csv:
+        path: 'your csv file path'
+      register: name_of_file
+      delegate_to: localhost
+
+    - name: Create devices
+      netbox.netbox.netbox_device:
+        data:
+          name: "{{ device['HOST_NAME'] }}"
+          location: "{{ device['ROOM-NO'] }}"
+          device_type: "{{ device.DEVICE_TYPE }}"
+          device_role: core-switch
+          site: "{{ device.SITES }}"
+          description: "{{ device.ID }}"
+        state: present
+      loop: "{{ name_of_file.list }}"
+      loop_control:
+        loop_var: device 
+

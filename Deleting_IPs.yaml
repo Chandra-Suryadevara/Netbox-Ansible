@@ -1,0 +1,24 @@
+- name: "Deleting IPS"
+  connection: local
+  hosts: localhost
+  gather_facts: False
+  module_defaults:
+    group/netbox.netbox.netbox:
+      netbox_url: "your url"
+      netbox_token: "your api token"
+
+  tasks:
+    - name: Read users from CSV file
+      community.general.read_csv:
+        path: 'your csv file path'
+      register: name_of_file
+      delegate_to: localhost
+      
+    - name: Delete IP address within netbox
+      netbox.netbox.netbox_ip_address:
+        data:
+         address: "{{ device.IP_ADDR }}"
+        state: absent
+      loop: "{{ name_of_file.list }}"
+      loop_control:
+        loop_var: device
